@@ -1,0 +1,26 @@
+<meta charset="UTF-8">
+
+<script>
+function sorteia(n) {
+  return Math.floor(Math.random() * (n + 1));
+}
+
+var numeroPensado = sorteia(100);
+var tentativas = 0;
+
+while (true) {
+  var chute = parseInt(prompt("Digite um número entre 0 e 100:"));
+  tentativas++;
+
+  if (chute == numeroPensado) {
+    alert("Parabéns, você acertou em " + tentativas + " tentativas!");
+    break;
+  } else if (chute > numeroPensado) {
+    alert("O número pensado é menor que " + chute + ".");
+  } else {
+    alert("O número pensado é maior que " + chute + ".");
+  }
+}
+
+
+</script>
