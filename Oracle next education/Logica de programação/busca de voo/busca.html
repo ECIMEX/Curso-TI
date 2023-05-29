@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Busca de Voos</title>
+    <style>
+        /* Estilos CSS para a página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            background-image: url('aviation_background.jpg'); /* Substitua 'aviation_background.jpg' pelo caminho para a sua imagem de fundo */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        #aeroportos {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #aeroportos p {
+            color: #fff;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Busca de Voos</h1>
+    <form>
+        <label for="origem">Origem:</label>
+        <input type="text" id="origem" name="origem" oninput="listarAeroportos(this.value)">
+
+        <label for="destino">Destino:</label>
+        <input type="text" id="destino" name="destino" oninput="listarAeroportos(this.value)">
+
+        <label for="data">Data de partida:</label>
+        <input type="date" id="data" name="data">
+
+        <input type="submit" value="Buscar Voos">
+    </form>
+
+    <div id="aeroportos"></div>
+
+    <script>
+        function listarAeroportos(valor) {
+            // Chamar a API para buscar os aeroportos de acordo com o valor digitado
+            var apiKey = 'f1eaa7d5487bfa7aaf1603ff9db495a3';
+            var apiUrl = 'https://api.airport.com/airports?q=' + valor + '&key=' + apiKey;
+
+            var request = new XMLHttpRequest();
+            request.open('GET', apiUrl, true);
+
+            request.onload = function() {
+                if (request.status >= 200 && request.status < 400) {
+                    var response = JSON.parse(request.responseText);
+                    var aeroportosDiv = document.getElementById('aeroportos');
+                    aeroportosDiv.innerHTML = '';
+
+                    response.data.forEach(function(aeroporto) {
+                        var aeroportoItem = document.createElement('p');
+                        aeroportoItem.textContent = aeroporto.name;
+                        aeroportosDiv.appendChild(aeroportoItem);
+                    });
+                }
+            };
+
+            request.send();
+        }
+
+        // Função para tratar o envio do formulário
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita o envio do formulário
+
+            // Obter valores dos campos de entrada
+            var origem = document.getElementById('origem').value;
+            var destino = document.getElementById('destino').value;
+            var data = document.getElementById('data').value;
+
+            // Aqui você pode implementar a lógica para buscar os valores dos voos no mês selecionado
+
+            // Exemplo: Exibir os valores dos voos encontrados no console
+            console.log('Origem:', origem);
+            console.log('Destino:', destino);
+            console.log('Data de partida:', data);
+        });
+    </script>
+</body>
+</html>

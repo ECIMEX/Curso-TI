@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Decodificador de Texto</title>
+  <style>
+    body {
+      background-color: #333;
+      color: #fff;
+    }
+    
+    input[type="text"] {
+      background-color: #eee;
+      color: #333;
+      padding: 5px;
+      margin-bottom: 10px;
+      width: 300px;
+    }
+    
+    select {
+      background-color: #eee;
+      color: #333;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    
+    button {
+      padding: 5px 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Decodificador de Texto - Estilo Enigma</h1>
+  
+  <label for="textoCodificado">Texto Codificado:</label><br>
+  <input type="text" id="textoCodificado" placeholder="Insira o texto codificado"><br>
+  
+  <button onclick="decodificarTexto()">Decodificar</button><br>
+  
+  <label for="textoDecodificado">Texto Decodificado:</label><br>
+  <input type="text" id="textoDecodificado" readonly><br>
+  
+  <hr>
+  
+  <label for="textoNormal">Texto Normal:</label><br>
+  <input type="text" id="textoNormal" placeholder="Insira o texto normal"><br>
+  
+  <button onclick="codificarTexto()">Codificar</button><br>
+  
+  <label for="textoCodificado2">Texto Codificado:</label><br>
+  <input type="text" id="textoCodificado2" readonly><br>
+  
+  <script>
+    // Configurações da máquina Enigma
+    var rotor = "EKMFLGDQVZNTOWYHXUSPAIBRCJ"; // Rotor com fiação interna
+    var reflector = "YRUHQSLDPXNGOKMIEBFZCWVJAT"; // Refletor
+    
+    function decodificarTexto() {
+      var textoCodificado = document.getElementById("textoCodificado").value;
+      var textoDecodificado = codificarDecodificarTexto(textoCodificado);
+      document.getElementById("textoDecodificado").value = textoDecodificado;
+    }
+    
+    function codificarTexto() {
+      var textoNormal = document.getElementById("textoNormal").value;
+      var textoCodificado = codificarDecodificarTexto(textoNormal);
+      document.getElementById("textoCodificado2").value = textoCodificado;
+    }
+    
+    function codificarDecodificarTexto(texto) {
+      texto = texto.toUpperCase(); // Converter para maiúsculas
+      
+      var resultado = "";
+      
+      for (var i = 0; i < texto.length; i++) {
+        var letra = texto[i];
+        
+        if (letra.match(/[A-Z]/)) {
+          var codigo = letra.charCodeAt(0) - 65; // Converter para o intervalo de 0 a 25
+          var letraCodificada = rotor[codigo];
+          resultado += letraCodificada;
+        } else {
+          resultado += letra;
+        }
+      }
+      
+      return resultado;
+    }
+  </script>
+</body>
+</html>
